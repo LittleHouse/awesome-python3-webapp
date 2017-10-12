@@ -92,7 +92,7 @@ class RequestHandler(object):
     async def __call__(self, request):
         kw = None
         if self._has_var_kw_arg or self._has_named_kw_args or self._required_kw_args:
-            if request.methode == 'POST':
+            if request.method == 'POST':
                 if not request.content_type:
                     return web.HTTPBadRequest('Missing content_type')
                 ct = request.content_type.lower()
@@ -106,7 +106,7 @@ class RequestHandler(object):
                     kw = dict(**params)
                 else:
                     return web.HTTPBadRequest('Unsupported Content-Type: %s' % request.content_type)
-            if request.methode == 'GET':
+            if request.method == 'GET':
                 qs = request.query_string
                 if qs:
                     kw = dict()
